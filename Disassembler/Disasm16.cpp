@@ -163,7 +163,7 @@ void Disasm8086::decodeAll()
 		{
 			instr = dataByte();
 			code.push_back(instr);
-			std::cout << instr << std::endl;
+			//std::cout << instr << std::endl;
 			if(byteNo < bytes.size()) 
 			{
 				byteNo++; 
@@ -176,7 +176,7 @@ void Disasm8086::decodeAll()
 		instr.position = PC;
 		code.push_back(instr);				
 		
-		std::cout <<std::hex << (unsigned) byteNo << ":"<< instr << std::endl;
+		//std::cout <<std::hex << (unsigned) byteNo << ":"<< instr << std::endl;
 		byteNo += bytesToSkip;
 	}
 }

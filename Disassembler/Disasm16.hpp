@@ -1,18 +1,27 @@
 #pragma once
 #include "optable.hpp"
 
-
+typedef instruction_t Instruction;
 namespace Engine
 {
 	
 typedef std::vector<uint8_t> Bytearray;
 typedef std::vector<instruction_t> Instructions;
 
+
 class Disasm8086
 {
 	public:
 		Disasm8086(const std::string&);
-			
+		inline Instructions::iterator begin()
+		{
+			return code.begin();
+		}
+		inline Instructions::iterator end()
+		{
+			return code.end();
+		}
+		
 	private:
 		int reconInstructionSize(const opdata_t&) ;
 		int reconDisplacementSize(const modrm_type_t&) ;

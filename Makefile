@@ -23,6 +23,10 @@ test:
 	$(ASM) -f bin test-binary/test.asm -o test-binary/test.bin
 	echo "objdump -M intel -D -b binary -m i8086 test-binary/test.bin" > redir
 
+CPU:
+	$(CC) $(CFLAGS) -c CPU/CPU.cpp -o obj/CPU.o
+	$(CC) $(CFLAGS) main.cpp -o main obj/Disasm16.o obj/CPU.o
+
 optable:
 	g++ -x c++-header -gdwarf-2 -o obj/optable.hpp.gch -c Disassembler/optable.hpp --std=c++11 
 
