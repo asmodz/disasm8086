@@ -1,6 +1,4 @@
 *.o
 redir.sh
 redir
-test-binary/
-obj/
-
+test.bin
