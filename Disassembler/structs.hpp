@@ -382,12 +382,10 @@ static std::string signedHexString(const instruction_t& instr, int what)
 	#define REGISTER_SIZE  3
 	#define IMMEDIATE_SIZE 4
 	std::array<char, 16> buffer;
-	if(what == DISPLACEMENT || what == DISPLACEMENT_WITHOUT_SIGNS)
+	if(what == DISPLACEMENT)
 	{
 		std::string min, plu;
-		
-		what == DISPLACEMENT_WITHOUT_SIGNS? 
-			(min = "", plu = "" ) : (min = "-", plu = "+");
+		(min = "-", plu = "+");
 		
 		if(instr.displacement == VAL_BYTE_DISPLACEMENT)
 		{
@@ -402,6 +400,20 @@ static std::string signedHexString(const instruction_t& instr, int what)
 				x<0?min.c_str():plu.c_str(), x<0?-(unsigned)x:x);
 		}
 		return std::string(buffer.data());
+	}
+	if(what == DISPLACEMENT_WITHOUT_SIGNS)
+	{
+		if(instr.displacement == VAL_BYTE_DISPLACEMENT)
+		{
+			uint8_t x = instr.p_offset.ubyte;
+			snprintf(buffer.data(), buffer.size(), "0x%x", x);
+		}
+		if(instr.displacement == VAL_WORD_DISPLACEMENT)
+		{
+			uint16_t x = instr.p_offset.uword;
+			snprintf(buffer.data(), buffer.size(), "0x%x", x);
+		}
+		return std::string(buffer.data());		
 	}
 	if(what == REGISTER_SIZE)
 	{
@@ -706,12 +718,12 @@ static std::string getImmJmpString(const instruction_t& instr)
 	
 	if(instr.data.dst == IMM_IB)
 	{
-		snprintf(buffer.data(), 10, "0x%x", instr.p_offset.sbyte);
+		snprintf(buffer.data(), 10, "0x%x", instr.p_offset.ubyte);
 		return instr.data.name + " " + buffer.data();
 	}
 	if(instr.data.dst == IMM_IV)
 	{
-		snprintf(buffer.data(), 10, "0x%x", instr.p_offset.sword);
+		snprintf(buffer.data(), 10, "0x%x", instr.p_offset.uword);
 		return instr.data.name + " " + buffer.data();
 	}
 	

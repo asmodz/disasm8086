@@ -176,7 +176,7 @@ void Disasm8086::decodeAll()
 		instr.position = PC;
 		code.push_back(instr);				
 		
-		std::cout <<std::hex << (unsigned) byteNo << ":"<< instr << " ( " << byteNo << "," << bytes.size() << " ) "  << std::endl;
+		std::cout <<std::hex << (unsigned) byteNo << ":"<< instr << std::endl;
 		byteNo += bytesToSkip;
 	}
 }
@@ -327,14 +327,14 @@ instruction_t Disasm8086::decodeJmpInstr(opdata_t& op)
 	{
 		offst.sbyte = bytes[byteNo + 1];
 		// Real position in code
-		roffst.sbyte = (offst.sbyte + 0x2) + byteNo;
+		roffst.ubyte = (offst.sbyte + 0x2) + byteNo;
 	}
 	if(op.dst == IMM_IV)
 	{
 		offst.sword = bytes[byteNo + 2] << 8 | bytes[byteNo + 1];
-		roffst.sword = (offst.sword + 0x3) + byteNo;
+		roffst.uword = (offst.sword + 0x3) + byteNo;
 	}
-	return instruction_t(op,0, offst, roffst);
+	return instruction_t(op, VAL_NO_DISPLACEMENT, offst, roffst);
 }
 
 // <modrm> rev ok
