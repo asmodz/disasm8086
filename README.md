@@ -1,1 +1,2 @@
-16 bit 8086 emulator, very limited. Just 4 fun
+8086 full disassembler.
+NASM Syntax
